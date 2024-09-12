@@ -21,7 +21,7 @@ impl Protex {
     /// with this function you can create new instance of ProTex
     /// writing names in /name_of_protex format has been tested
     pub fn new(name: std::ffi::CString, max_lock_count: u32) -> Option<Self> {
-        let name_as_pcstr = unsafe { PCSTR(name.as_ptr()) };
+        let name_as_pcstr = unsafe { PCSTR(name.as_ptr().cast()) };
 
         let sem = unsafe {
             CreateSemaphoreA(
