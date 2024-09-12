@@ -1,6 +1,6 @@
 [package]
 name = "protex"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["ElectroMutex"]
 description = "ProTex (Process Mutex) concurrency in process level"
@@ -12,9 +12,18 @@ readme = "README.md"
 keywords = ["cross-platform" , "parallel" , "fast" , "concurrency" , "thread"]
 categories = ["concurrency"]
 
+include = [
+    "src/lib.rs",
+    "src/linux_bsd_mac.rs",
+    "src/android_ios.rs",
+    "src/windows.rs",
+    "Cargo.toml",
+    "README.md",
+]
 
 [dependencies]
 libc = "0.2.158"
 
 [target.'cfg(windows)'.dependencies]
 windows = "0.58.0"
+
