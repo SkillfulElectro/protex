@@ -18,9 +18,9 @@ impl Protex {
     /// writing names in /name_of_protex has been tested
     pub fn new(name : std::ffi::CString , max_lock_count : u32) -> Option<Self> {
         unsafe {
-            #[cfg(not("macos"))]
+            #[cfg(not(target_os = "macos"))]
             let sem = libc::sem_open(name.as_ptr() , libc::O_CREAT, libc::S_IRUSR | libc::S_IWUSR, max_lock_count);
-            #[cfg(any("macos"))]
+            #[cfg(any(target_os = "macos"))]
             let sem = libc::sem_open(name.as_ptr() , libc::O_CREAT, (libc::S_IRUSR | libc::S_IWUSR) as libc::c_uint , max_lock_count);
 
             if sem == libc::SEM_FAILED {
