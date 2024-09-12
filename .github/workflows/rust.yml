@@ -1,0 +1,46 @@
+name: Build
+
+permissions: {}
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  CARGO_INCREMENTAL: 0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Rust
+      run: rustup update
+
+    - name: Install dependencies for cross compilation
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pkg-config libssl-dev
+
+    - name: Install cross
+      run: cargo install cross --git https://github.com/cross-rs/cross
+
+    - name: Build for Windows
+      run: cross build --release --target x86_64-pc-windows-msvc
+
+    - name: Build for Linux
+      run: cross build --release --target x86_64-unknown-linux-gnu
+
+    - name: Build for macOS
+      run: cross build --release --target x86_64-apple-darwin
+
+    - name: Build for Android
+      run: cross build --release --target aarch64-linux-android
+
+    - name: Build for iOS
+      run: cross build --release --target aarch64-apple-ios
+
+
