@@ -49,7 +49,7 @@ impl Protex {
     /// ```rust
     /// let guard = protex_var.lock().unwrap()
     /// ```
-    pub fn lock(&self) -> Result<ProtexGuard , i32> {
+    pub fn lock(&mut self) -> Result<ProtexGuard , i32> {
         match self.sem {
             None => {
                 eprintln!("empty Protex, use Protex::new function");
@@ -112,7 +112,7 @@ impl ProtexGuard {
             },
             Some(sem) => unsafe {
                 let result = ReleaseSemaphore(sem, 1, None);
-                if result.as_bool() {
+                if let Ok(()) = result {
                     0
                 } else {
                     print_last_error();
