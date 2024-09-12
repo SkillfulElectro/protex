@@ -104,7 +104,7 @@ pub struct ProtexGuard{
 }
 
 impl ProtexGuard {
-    fn unlock(&self) -> i32 {
+    fn unlock(&mut self) -> i32 {
         match self.sem {
             None => {
                 eprintln!("empty Protex, use Protex::new function");
