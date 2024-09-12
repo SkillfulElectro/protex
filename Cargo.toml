@@ -1,0 +1,20 @@
+[package]
+name = "protex"
+version = "0.1.0"
+edition = "2021"
+authors = ["ElectroMutex"]
+description = "ProTex (Process Mutex) concurrency in process level"
+license = "MIT"
+documentation = "https://docs.rs/protex/latest/protex/"
+homepage = "https://github.com/SkillfulElectro/protex.git"
+repository = "https://github.com/SkillfulElectro/protex.git"
+readme = "README.md"
+keywords = ["cross-platform" , "parallel" , "fast" , "concurrency" , "thread"]
+categories = ["concurrency"]
+
+
+[dependencies]
+libc = "0.2.158"
+
+[target.'cfg(windows)'.dependencies]
+windows = "0.58.0"
