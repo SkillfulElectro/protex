@@ -2,7 +2,7 @@ use std::io::Error;
 use windows::Win32::System::Threading::{
     CreateSemaphoreA, ReleaseSemaphore, WaitForSingleObject, INFINITE,
 };
-use windows::Win32::Foundation::{HANDLE, CloseHandle, BOOL};
+use windows::Win32::Foundation::{HANDLE, CloseHandle, BOOL, WAIT_OBJECT_0};
 use windows::core::PCSTR;
 
 /// ProTex (process mutex) is used to bring concurrency to multi processing well it can be used 
@@ -112,7 +112,7 @@ impl ProtexGuard {
             },
             Some(sem) => unsafe {
                 let result = ReleaseSemaphore(sem, 1, None);
-                if result == BOOL::from(true) {
+                if result.as_bool() {
                     0
                 } else {
                     print_last_error();
