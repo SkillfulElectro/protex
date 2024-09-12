@@ -26,4 +26,4 @@ pub use android_ios::{Protex , ProtexGuard};
 mod windows;
 #[cfg(target_os = "windows")]
 /// windows
-pub use windows::{Protex , ProtexGaurd};
+pub use windows::{Protex , ProtexGuard};
