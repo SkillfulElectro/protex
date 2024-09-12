@@ -27,9 +27,9 @@ impl Protex {
             CreateSemaphoreA(
                 None, // default security attributes
                 0, // initial count
-                max_lock_count, // maximum count
+                max_lock_count.try_into().unwrap() , // maximum count
                 name_as_pcstr // name
-            )
+            ).unwrap()
         };
 
         if sem.is_invalid() {
@@ -58,16 +58,16 @@ impl Protex {
             Some(sem) => unsafe {
                 let wait_result = WaitForSingleObject(sem, INFINITE);
                 match wait_result {
-                    windows::Win32::System::Threading::WAIT_OBJECT_0 => Ok(ProtexGuard{
-                        sem : self.sem ,
-                    }),
-                    _ => {
-                        print_last_error();
-                        // Handle failure by closing the semaphore and returning error code
-                        self.close();
-                        Err(-1)
-                    }
-                }
+    WAIT_OBJECT_0 => Ok(ProtexGuard {
+        sem: self.sem,
+    }),
+    _ => {
+        print_last_error();
+        self.close();
+        Err(-1)
+    }
+}
+
             }
         }
     }
